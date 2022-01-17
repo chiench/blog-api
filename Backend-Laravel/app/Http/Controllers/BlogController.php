@@ -36,6 +36,10 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title'    => 'required',
+            'content'   => 'required',
+        ]);
         $blogs = new Blog();
         $blogs->fill($request->all());
         $blogs->save();
@@ -74,7 +78,15 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+         $this->validate($request, [
+            'title'    => 'required',
+            'content'   => 'required',
+
+        ]);
+
+        $edit = Blog::find($blog)->update($request->all());
+
+        return response()->json($edit);
     }
 
     /**
